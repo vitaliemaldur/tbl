@@ -1,41 +1,18 @@
 import asyncio
-import aiohttp
-from bs4 import BeautifulSoup
+from scrapers import *
 
+SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
+            DigitalOceanScraper]
 
-class BaseScraper(object):
-    url = None
+async def get_all_links(session, scrapers):
+    links = set()
+    for scraper in scrapers:
+        links |= await scraper.get_links(session)
+    return links
 
-    @classmethod
-    async def fetch_page(cls, session):
-        with aiohttp.Timeout(10):
-            async with session.get(cls.url) as response:
-                assert response.status == 200
-                return await response.read()
-
-    @classmethod
-    async def get_links(cls, session):
-        page = await cls.fetch_page(session)
-        soup = BeautifulSoup(page, 'html.parser')
-        return [a['href'] for a in soup.find_all('a', href=True)]
-
-
-class QuoraScraper(BaseScraper):
-    url = 'https://blog.quora.com'
-
-    @classmethod
-    async def get_links(cls, session):
-        content = await cls.fetch_page(session)
-        soup = BeautifulSoup(content, 'html.parser')
-        return [a['href'] for a in soup.find_all('a', class_='BoardItemTitle')]
-
-
-
-SCRAPERS = [QuoraScraper]
 
 loop = asyncio.get_event_loop()
 with aiohttp.ClientSession(loop=loop) as session:
-    for scraper in SCRAPERS:
-        links = loop.run_until_complete(scraper.get_links(session))
-        print(links)
+    links = loop.run_until_complete(get_all_links(session, SCRAPERS))
+    print(links)
 
