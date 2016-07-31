@@ -1,2 +1,3 @@
 aiohttp==0.22.4
+motor==0.6.2
 beautifulsoup4==4.5.0

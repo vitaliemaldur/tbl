@@ -1,14 +1,17 @@
 import asyncio
+import db
+from operator import or_
+from functools import reduce
 from scrapers import *
+
 
 SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
             DigitalOceanScraper]
 
 async def get_all_links(session, scrapers):
-    links = set()
-    for scraper in scrapers:
-        links |= await scraper.get_links(session)
-    return links
+    futures = [asyncio.ensure_future(scraper.get_links(session)) for scraper in scrapers]
+    links = await asyncio.gather(*futures)
+    return await db.insert_urls(reduce(or_, links))
 
 
 loop = asyncio.get_event_loop()
