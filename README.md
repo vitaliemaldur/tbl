@@ -7,7 +7,7 @@ This is a scraper that will get links from a set of web pages and will post them
 
 ### Run
 ```bash
-python main.py
+FB_PAGE_ID=<your_fb_page_id> FB_ACCESS_TOKEN=<your_fb_page_token> python main.py
 ```
   
   
