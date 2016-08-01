@@ -14,8 +14,9 @@ async def get_all_links(session, scrapers):
     return await db.insert_urls(reduce(or_, links))
 
 
-loop = asyncio.get_event_loop()
-with aiohttp.ClientSession(loop=loop) as session:
-    links = loop.run_until_complete(get_all_links(session, SCRAPERS))
-    print(links)
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    with aiohttp.ClientSession(loop=loop) as session:
+        links = loop.run_until_complete(get_all_links(session, SCRAPERS))
+        print(links)
 
