@@ -15,6 +15,7 @@ async def main():
     print ('Next to post is this url:', link)
 
     # post to social networks
+    # TODO: add other social posters
     await facebook.post(link)
 
     # mark link as used
