@@ -1,26 +1,24 @@
-import os 
-import aiohttp
-
 from urllib.parse import quote_plus
+from tbl.posters.base import BasePoster
 
 
-# get facebook page access token and page id from env
-FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
-FB_PAGE_ID = os.environ.get('FB_PAGE_ID') 
+class FacebookPoster(BasePoster):
+    api_url = 'https://graph.facebook.com/v2.7/{page_id}/feed?message={message}&link={link}&access_token={access_token}'
 
-API_URL = 'https://graph.facebook.com/v2.7/{page_id}/feed?message={message}&link={link}&access_token={access_token}'
+    def __init__(self, token, page_id):
+        self.token = token
+        self.page_id = page_id
+        super().__init__()
 
+    async def post(self, link, *args, **kwargs):
+        url = self.api_url.format(
+            page_id=self.page_id,
+            message=quote_plus(kwargs.get('message', '')),
+            link=quote_plus(link),
+            access_token=self.token,
+        )
 
-async def post(link, message=''):
-    url = API_URL.format(
-        page_id=FB_PAGE_ID, 
-        message=quote_plus(message),
-        link=quote_plus(link),
-        access_token=FB_ACCESS_TOKEN,
-    )
-
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url) as resp:
-            print(resp.status)
-            print(await resp.text())
+        with self.session as session:
+            async with session.post(url) as resp:
+                return resp.status == 200
 

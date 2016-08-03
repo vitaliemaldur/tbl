@@ -1,9 +1,24 @@
 import asyncio
-import db
+import os
+from tbl import db
 from operator import or_
 from functools import reduce
-from scrapers import *
+from tbl.scrapers import *
+from tbl.posters.twitter import TwitterPoster
 
+# get facebook credentials
+FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
+FB_PAGE_ID = os.environ.get('FB_PAGE_ID')
+
+# get twetter credentials
+TW_CONSUMER_KEY = os.environ.get('TW_CONSUMER_KEY')
+TW_CONSUMER_SECRET = os.environ.get('TW_CONSUMER_SECRET')
+TW_ACCESS_TOKEN = os.environ.get('TW_ACCESS_TOKEN')
+TW_ACCESS_TOKEN_SECRET = os.environ.get('TW_ACCESS_TOKEN_SECRET')
+
+
+twitter = TwitterPoster(TW_CONSUMER_KEY, TW_CONSUMER_SECRET,
+                        TW_ACCESS_TOKEN, TW_ACCESS_TOKEN_SECRET)
 
 SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
             DigitalOceanScraper]
@@ -16,11 +31,6 @@ async def get_all_links(session, scrapers):
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    """
     with aiohttp.ClientSession(loop=loop) as session:
-        links = loop.run_until_complete(get_all_links(session, SCRAPERS))
+        links = loop.run_until_complete(twitter.post('Test'))
         print(links)
-    """
-
-    loop.run_until_complete(db.get_random_url())
-
