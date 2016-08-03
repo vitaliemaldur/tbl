@@ -12,7 +12,7 @@ If you want to contribute be sure that you:
   pip install -r requirements-dev.txt
   python setup.py develop
   ```
-  - run `fake8 .` in the root of the project and fix the errors, before pushing your changes
+  - run `flake8 .` in the root of the project and fix the errors, before pushing your changes
 
 
 ## Run
