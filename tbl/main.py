@@ -16,7 +16,11 @@ async def get_all_links(session, scrapers):
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
+    """
     with aiohttp.ClientSession(loop=loop) as session:
         links = loop.run_until_complete(get_all_links(session, SCRAPERS))
         print(links)
+    """
+
+    loop.run_until_complete(db.get_random_url())
 

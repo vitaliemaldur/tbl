@@ -3,7 +3,17 @@ This is a scraper that will get links from a set of web pages and will post them
 
 ## Setup
   - Install `mongodb`
-  - Install `python3.5` and just `pip install -r requirements.txt`
+  - Install `python3.5` and just `python setup.py install`
+  
+If you want to contribute be sure that you:
+  - install the package and requirements 
+  
+  ```bash
+  pip install -r requirements-dev.txt
+  python setup.py develop
+  ```
+  - run `fake8 .` in the root of the project and fix the errors, before pushing your changes
+
 
 ## Run
 ```bash
