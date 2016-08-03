@@ -1,11 +1,11 @@
-from distutils.core import setup
+from setuptools import setup
 
 
 setup(
     name='tbl',
     version='1.0.0',
-    description='Tech Blogs Links',
-    author='Tech Blogs Links',
+    description='Tech Blog Links',
+    author='Tech Blog Links',
     author_email='support@localhost',
     packages=['tbl'],
     include_package_data=True,
