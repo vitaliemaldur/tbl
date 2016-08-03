@@ -20,6 +20,7 @@ If you want to contribute be sure that you:
 FB_PAGE_ID=<your_fb_page_id> FB_ACCESS_TOKEN=<your_fb_page_token> python main.py
 ```
   
+## OAuth Tokens
   
 ### Facebook access token
 Debug tool: https://developers.facebook.com/tools/debug/accesstoken
@@ -40,3 +41,7 @@ Steps to get the extended token:
  
 Check the token with the debug tool, should countain **Expires: Never**
   
+### Twitter access tokens
+  1. Go to [Twitter Application Manager](https://apps.twitter.com/) and create an app
+  2. Generate access token using this [guide](https://dev.twitter.com/oauth/overview/application-owner-access-tokens)
+  3. Go to Keys & Access Tokens tab on your new created app
