@@ -3,7 +3,8 @@ from tbl.posters.base import BasePoster
 
 
 class FacebookPoster(BasePoster):
-    api_url = 'https://graph.facebook.com/v2.7/{page_id}/feed?message={message}&link={link}&access_token={access_token}'
+    api_url = 'https://graph.facebook.com/v2.7/{page_id}/feed?message={message}\
+    &link={link}&access_token={access_token}'
 
     def __init__(self, token, page_id):
         self.token = token
@@ -21,4 +22,3 @@ class FacebookPoster(BasePoster):
         with self.session as session:
             async with session.post(url) as resp:
                 return resp.status == 200
-

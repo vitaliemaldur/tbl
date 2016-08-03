@@ -46,4 +46,3 @@ async def get_next_for_post():
         return
 
     return results[0]
-

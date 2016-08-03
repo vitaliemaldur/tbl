@@ -9,7 +9,9 @@ class BaseScraper(object):
     @classmethod
     async def fetch_page(cls, session):
         with aiohttp.Timeout(10):
-            headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'}
+            headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X \
+            10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.\
+            103 Safari/537.36'}
             async with session.get(cls.url, headers=headers) as response:
                 assert response.status == 200
                 return BeautifulSoup(await response.read(), 'html.parser')
@@ -45,7 +47,8 @@ class FacebookScraper(BaseScraper):
     async def get_links(cls, session):
         page = await cls.fetch_page(session)
         links = set()
-        for comment in page.findAll(text=lambda text: isinstance(text, Comment)):
+        for comment in page.findAll(
+                text=lambda text: isinstance(text, Comment)):
             html = BeautifulSoup(comment.extract(), 'html.parser')
             links |= {a['href'] for a in html.find_all('a') if
                       cls.url in a['href']}
