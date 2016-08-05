@@ -23,7 +23,7 @@ class BaseScraper(object):
 
 
 class QuoraScraper(BaseScraper):
-    url = 'https://blog.quora.com'
+    url = 'https://engineering.quora.com/'
 
     @classmethod
     async def get_links(cls, session):

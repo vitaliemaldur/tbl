@@ -8,7 +8,7 @@ import motor.motor_asyncio
 
 log = logging.getLogger(__name__)
 client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
-db = client['links']
+db = client['tbl']
 posts_collection = db['posts']
 
 
@@ -17,7 +17,7 @@ async def insert_url(url):
     if not document:
         document = await posts_collection.insert({
             'url': url,
-            'created_at': datetime.utnow(),
+            'created_at': datetime.utcnow(),
             'posted_at': None,
             '_random_value': random.random(),
         })
