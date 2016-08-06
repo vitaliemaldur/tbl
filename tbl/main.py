@@ -4,10 +4,14 @@ from tbl import db
 from operator import or_
 from functools import reduce
 from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
-    UberScraper, DigitalOceanScraper
+    UberScraper, DigitalOceanScraper, PinterestScraper, SpotifyScraper, \
+    NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
+    DropboxScraper, YoutubeScraper
 
 SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
-            DigitalOceanScraper]
+            DigitalOceanScraper, PinterestScraper, SpotifyScraper,
+            NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper,
+            DropboxScraper, YoutubeScraper]
 
 async def get_all_links(session, scrapers):
     futures = [asyncio.ensure_future(scraper.get_links(session)) for scraper in

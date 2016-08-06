@@ -1,11 +1,11 @@
 import aiohttp
+import feedparser
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup, Comment
 
 
 class BaseScraper(object):
     url = None
-    rss = False
 
     @classmethod
     async def fetch_page(cls, session):
@@ -13,17 +13,15 @@ class BaseScraper(object):
             headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X \
             10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.\
             103 Safari/537.36'}
-            parser = 'html.parser' if not cls.rss else 'xml'
             async with session.get(cls.url, headers=headers) as response:
                 assert response.status == 200
-                return BeautifulSoup(await response.read(), parser)
+                return await response.read()
 
     @classmethod
     async def get_links(cls, session):
         page = await cls.fetch_page(session)
-        if cls.rss:
-            return {item.link.text for item in page.find_all('item')}
-        return {a['href'] for a in page.find_all('a', href=True)}
+        feed = feedparser.parse(page)
+        return {item.link for item in feed.entries}
 
 
 class QuoraScraper(BaseScraper):
@@ -31,17 +29,8 @@ class QuoraScraper(BaseScraper):
 
     @classmethod
     async def get_links(cls, session):
-        page = await cls.fetch_page(session)
+        page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
         return {a['href'] for a in page.find_all('a', class_='BoardItemTitle')}
-
-
-class InstagramScraper(BaseScraper):
-    url = 'https://engineering.instagram.com/'
-
-    @classmethod
-    async def get_links(cls, session):
-        page = await cls.fetch_page(session)
-        return {a['href'] for a in page.select('article > a')}
 
 
 class FacebookScraper(BaseScraper):
@@ -49,7 +38,7 @@ class FacebookScraper(BaseScraper):
 
     @classmethod
     async def get_links(cls, session):
-        page = await cls.fetch_page(session)
+        page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
         links = set()
         for comment in page.findAll(
                 text=lambda text: isinstance(text, Comment)):
@@ -59,21 +48,51 @@ class FacebookScraper(BaseScraper):
         return links
 
 
-class UberScraper(BaseScraper):
-    url = 'https://eng.uber.com/'
-
-    @classmethod
-    async def get_links(cls, session):
-        page = await cls.fetch_page(session)
-        return {span.a['href'] for span in
-                page.find_all('span', class_='post_link')}
-
-
 class DigitalOceanScraper(BaseScraper):
     url = 'https://www.digitalocean.com/company/blog/'
 
     @classmethod
     async def get_links(cls, session):
-        page = await cls.fetch_page(session)
+        page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
         return {urljoin(cls.url, a['href']) for a in
                 page.select('article > h2 > a')}
+
+
+class InstagramScraper(BaseScraper):
+    url = 'https://engineering.instagram.com/feed'
+
+
+class UberScraper(BaseScraper):
+    url = 'https://eng.uber.com/feed/'
+
+
+class PinterestScraper(BaseScraper):
+    url = 'https://engineering.pinterest.com/blog/rss'
+
+
+class SpotifyScraper(BaseScraper):
+    url = 'https://labs.spotify.com/feed/'
+
+
+class NetflixScraper(BaseScraper):
+    url = 'http://techblog.netflix.com/feeds/posts/default'
+
+
+class AirbnbScraper(BaseScraper):
+    url = 'http://nerds.airbnb.com/feed/'
+
+
+class PayPalScraper(BaseScraper):
+    url = 'https://www.paypal-engineering.com/feed/'
+
+
+class TwitterScraper(BaseScraper):
+    url = 'https://blog.twitter.com/api/blog.rss?name=engineering'
+
+
+class DropboxScraper(BaseScraper):
+    url = 'https://blogs.dropbox.com/tech/feed/'
+
+
+class YoutubeScraper(BaseScraper):
+    url = 'https://youtube-eng.blogspot.com/feeds/posts/default?alt=rss'
