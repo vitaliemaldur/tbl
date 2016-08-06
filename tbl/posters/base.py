@@ -13,3 +13,6 @@ class BasePoster(object):
 
     async def post(self, link, *args, **kwargs):
         raise NotImplementedError()
+
+    def __del__(self):
+        self.session.close()
