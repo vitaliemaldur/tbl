@@ -37,7 +37,7 @@ class TwitterPoster(BasePoster):
         base_string = '{method}&{url}&{params}'.format(
             method=quote(method, safe=''),
             url=quote(api_url, safe=''),
-            params=quote(urlencode(params, safe='', quote_via=quote), safe='')
+            params=quote(urlencode(params, safe='~', quote_via=quote), safe='~')
         ).encode('utf8')
 
         # create signing key
@@ -75,7 +75,7 @@ class TwitterPoster(BasePoster):
         )
 
         headers = {'Authorization': oauth}
-        data = urlencode({'status': link}, safe='', quote_via=quote)
+        data = urlencode({'status': link}, safe='~', quote_via=quote)
         url = '{base_url}?{data}'.format(base_url=self.api_url, data=data)
 
         with self.session as session:
