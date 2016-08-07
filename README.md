@@ -17,7 +17,16 @@ If you want to contribute be sure that you:
 
 ## Run
 ```bash
-FB_PAGE_ID=<your_fb_page_id> FB_ACCESS_TOKEN=<your_fb_page_token> python main.py
+export FB_PAGE_ID=<your_fb_page_id> 
+export FB_ACCESS_TOKEN=<your_fb_page_token>
+export TW_CONSUMER_KEY=<your_twitter_consumer_key>
+export TW_CONSUMER_SECRET=<your_twitter_consumer_secret>
+export TW_ACCESS_TOKEN=<your_twitter_token>
+export TW_ACCESS_TOKEN_SECRET=<your_twitter_token_secret>
+
+python tbl/manage.py                #to fetch and store the links
+python tbl/manage.py --post=twitter #to post a random link on twitter
+python tbl/manage.py --test=true    #to test all available scrapers
 ```
   
 ## OAuth Tokens
