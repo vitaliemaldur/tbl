@@ -104,8 +104,7 @@ parser = argparse.ArgumentParser(
     description='Fetch links, store and share them')
 parser.add_argument('-t', '--test', default=False, type=bool,
                     choices=(True, False), help='test available scrapers')
-parser.add_argument('-p', '--post', default='twitter', type=str,
-                    choices=('facebook', 'twitter'),
+parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
                     help='post on social media')
 
 if __name__ == '__main__':
