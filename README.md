@@ -41,7 +41,7 @@ Steps to get the extended token:
   manage_pages,publish_pages
   ```
 
-  2. Generate a extended user token
+  2. Generate an extended user token
   
   ```bash
   curl -i -X GET "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id={APP_ID}&client_secret={APP_SECRET}&fb_exchange_token={USER_TOKEN}"
