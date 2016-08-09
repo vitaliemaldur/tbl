@@ -96,3 +96,28 @@ class DropboxScraper(BaseScraper):
 
 class YoutubeScraper(BaseScraper):
     url = 'https://youtube-eng.blogspot.com/feeds/posts/default?alt=rss'
+
+
+class SlackScraper(BaseScraper):
+    url = 'https://medium.com/feed/slack-developer-blog'
+
+
+class AtlassianScraper(BaseScraper):
+    url = 'https://developer.atlassian.com/blog/feed.xml'
+
+
+class EvernoteScraper(BaseScraper):
+    url = 'https://blog.evernote.com/feed/'
+
+
+class GithubScraper(BaseScraper):
+    url = 'http://githubengineering.com/atom.xml'
+
+
+class BufferScraper(BaseScraper):
+    url = 'https://overflow.buffer.com/feed/'
+
+
+class YahooScraper(BaseScraper):
+    url = 'https://yahooeng.tumblr.com/rss'
+

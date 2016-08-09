@@ -12,7 +12,8 @@ from functools import reduce
 from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
     UberScraper, DigitalOceanScraper, PinterestScraper, SpotifyScraper, \
     NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
-    DropboxScraper, YoutubeScraper
+    DropboxScraper, YoutubeScraper, SlackScraper, EvernoteScraper, \
+    AtlassianScraper, GithubScraper, BufferScraper, YahooScraper
 
 # get facebook credentials
 FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
@@ -35,7 +36,8 @@ facebook = FacebookPoster(FB_ACCESS_TOKEN, FB_PAGE_ID)
 SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
             DigitalOceanScraper, PinterestScraper, SpotifyScraper,
             NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper,
-            DropboxScraper, YoutubeScraper]
+            DropboxScraper, YoutubeScraper, SlackScraper, EvernoteScraper,
+            AtlassianScraper, GithubScraper, BufferScraper, YahooScraper]
 
 
 async def get_all(session, scrapers):
