@@ -51,7 +51,7 @@ async def update_post(pk, keys):
     :param keys: dict with keys to update
     :return: updated document
     """
-    result = await posts_collection.update({'_id': pk}, keys)
+    result = await posts_collection.update({'_id': pk}, {'$set': keys})
     if not result.get('ok'):
         raise Exception('Document _id={} not updated'.format(pk))
     return await posts_collection.find_one({'_id': pk})
