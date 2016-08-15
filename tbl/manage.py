@@ -19,7 +19,7 @@ from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
 FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
 FB_PAGE_ID = os.environ.get('FB_PAGE_ID')
 
-# get twetter credentials
+# get twitter credentials
 TW_CONSUMER_KEY = os.environ.get('TW_CONSUMER_KEY')
 TW_CONSUMER_SECRET = os.environ.get('TW_CONSUMER_SECRET')
 TW_ACCESS_TOKEN = os.environ.get('TW_ACCESS_TOKEN')
@@ -101,7 +101,7 @@ async def get_and_save_all(session, scrapers):
     links = await get_all(session, scrapers)
     return await db.insert_urls(reduce(or_, links))
 
-# setuo arguments
+# setup arguments
 parser = argparse.ArgumentParser(
     description='Fetch links, store and share them')
 parser.add_argument('-t', '--test', default=False, type=bool,
