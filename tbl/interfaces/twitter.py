@@ -30,18 +30,18 @@ class TwitterInterface(BaseInterface):
         self.token_secret = token_secret
         super().__init__()
 
-    def get_signature(self, method, api_url, message, timestamp, unique):
+    def get_signature(self, method, api_url, tweet, timestamp, unique):
         """
         Get signature for the API call
         :param method: http method POST/GET/PUT ...
         :param api_url: API url that will be called
-        :param message: message to post
+        :param tweet: message to post
         :param timestamp: timestamp in seconds
         :param unique: unique id
         :return: the signature for the API call
         """
         params = {
-            'status': message,
+            'status': tweet,
             'oauth_consumer_key': self.consumer_key,
             'oauth_nonce': unique,
             'oauth_signature_method': 'HMAC-SHA1',
@@ -69,19 +69,23 @@ class TwitterInterface(BaseInterface):
         hashed = hmac.new(signature_key, base_string, sha1).digest()
         return base64.b64encode(hashed).decode('utf8')
 
-    async def post(self, message, *args, **kwargs):
+    async def post(self, link, message=None):
         """
-        Post a message on Twitter
+        Post a link with a message on Twitter
+        :param link: link to post
         :param message: message to post
-        :param args: other positional arguments
-        :param kwargs: other keyword arguments
         :return: True if message was posted successfully otherwise False
         """
         timestamp = int(time.time())
         unique = str(uuid.uuid4())
 
+        if message:
+            tweet = '{message} {link}'.format(message=message, link=link)
+        else:
+            tweet = link
+
         # get the signature
-        signature = self.get_signature('POST', self.api_url, message,
+        signature = self.get_signature('POST', self.api_url, tweet,
                                        timestamp, unique)
 
         # build auth header
@@ -102,7 +106,7 @@ class TwitterInterface(BaseInterface):
         )
 
         headers = {'Authorization': oauth}
-        data = urlencode({'status': message}, safe='~', quote_via=quote)
+        data = urlencode({'status': tweet}, safe='~', quote_via=quote)
         url = '{base_url}?{data}'.format(base_url=self.api_url, data=data)
 
         with self.session as session:

@@ -22,12 +22,11 @@ class BaseInterface(object):
         futures = [self.post(m) for m in messages]
         return await asyncio.gather(*futures)
 
-    async def post(self, message, *args, **kwargs):
+    async def post(self, link, message=None):
         """
-        Post a message on a specific social media platform
+        Post a link with a message on a specific social media platform
+        :param link: link to post
         :param message: message to post
-        :param args: other positional arguments
-        :param kwargs: other keyword arguments
         :return: True if message was posted successfully otherwise False
         """
         raise NotImplementedError()

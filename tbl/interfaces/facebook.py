@@ -19,18 +19,17 @@ class FacebookInterface(BaseInterface):
         self.page_id = page_id
         super().__init__()
 
-    async def post(self, message, *args, **kwargs):
+    async def post(self, link, message=None):
         """
-        Post a message on Facebook page
+        Post a link with a message on Facebook page
+        :param link: link to post
         :param message: message to post
-        :param args: other positional arguments
-        :param kwargs: other keyword arguments
         :return: True if message was posted successfully otherwise False
         """
         url = self.api_url.format(
             page_id=self.page_id,
-            message=quote_plus(kwargs.get('message', '')),
-            link=quote_plus(message),
+            message=quote_plus(message or ''),
+            link=quote_plus(link),
             access_token=self.token,
         )
 

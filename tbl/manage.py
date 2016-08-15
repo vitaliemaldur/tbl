@@ -75,11 +75,12 @@ async def post(platform='twitter'):
     """
     document = await db.get_next_for_post()
     link = document['url']
+    title = document['title'] if 'title' in document else None
 
     if platform == 'twitter':
-        result = await twitter.post(link)
+        result = await twitter.post(link, title)
     elif platform == 'facebook':
-        result = await facebook.post(link)
+        result = await facebook.post(link, title)
     else:
         print('Invalid platform')
         return False
