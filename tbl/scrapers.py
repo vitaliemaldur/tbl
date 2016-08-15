@@ -34,7 +34,7 @@ class BaseScraper(object):
         """
         page = await cls.fetch_page(session)
         feed = feedparser.parse(page)
-        return {item.link for item in feed.entries}
+        return {(item.link, item.title) for item in feed.entries}
 
 
 class QuoraScraper(BaseScraper):
@@ -43,22 +43,12 @@ class QuoraScraper(BaseScraper):
     @classmethod
     async def get_links(cls, session):
         page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
-        return {a['href'] for a in page.find_all('a', class_='BoardItemTitle')}
+        links = page.find_all('a', class_='BoardItemTitle')
+        return {(a['href'], a.strong.span.p.text) for a in links}
 
 
 class FacebookScraper(BaseScraper):
-    url = 'https://developers.facebook.com/blog/'
-
-    @classmethod
-    async def get_links(cls, session):
-        page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
-        links = set()
-        for comment in page.findAll(
-                text=lambda text: isinstance(text, Comment)):
-            html = BeautifulSoup(comment.extract(), 'html.parser')
-            links |= {a['href'] for a in html.find_all('a') if
-                      cls.url in a['href']}
-        return links
+    url = 'https://code.facebook.com/posts/rss'
 
 
 class DigitalOceanScraper(BaseScraper):
@@ -67,7 +57,7 @@ class DigitalOceanScraper(BaseScraper):
     @classmethod
     async def get_links(cls, session):
         page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
-        return {urljoin(cls.url, a['href']) for a in
+        return {(urljoin(cls.url, a['href']), a.text) for a in
                 page.select('article > h2 > a')}
 
 

@@ -60,7 +60,9 @@ async def test_scrapers(session, scrapers):
     """
     sets_of_links = await get_all(session, scrapers)
     for idx, links in enumerate(sets_of_links):
-        status = 'ok' if bool(links) else 'not ok'
+        is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
+                       links, True)
+        status = 'ok' if len(links) > 0 and is_ok else 'not ok'
         print('{scraper} ......... [{status}]'.format(
             scraper=scrapers[idx].__name__,
             status=status))
@@ -87,7 +89,7 @@ async def post(platform='twitter'):
     # mark link as used
     if result:
         update_keys = {'posted_at': datetime.utcnow()}
-        await db.update_posts(document['_id'], update_keys)
+        await db.update_post(document['_id'], update_keys)
 
     return result
 
