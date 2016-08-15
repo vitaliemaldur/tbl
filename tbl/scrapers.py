@@ -5,10 +5,18 @@ from bs4 import BeautifulSoup, Comment
 
 
 class BaseScraper(object):
+    """
+    Class that implments basic functionality for scraper classes
+    """
     url = None
 
     @classmethod
     async def fetch_page(cls, session):
+        """
+        Get a remote html/rss page
+        :param session: session used to fetch the page
+        :return:
+        """
         with aiohttp.Timeout(10):
             headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X \
             10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.\
@@ -19,6 +27,11 @@ class BaseScraper(object):
 
     @classmethod
     async def get_links(cls, session):
+        """
+        Get all links from a fetched page
+        :param session: session used to fetch the page
+        :return: a set of links from the page
+        """
         page = await cls.fetch_page(session)
         feed = feedparser.parse(page)
         return {item.link for item in feed.entries}
