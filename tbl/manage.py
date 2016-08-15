@@ -5,8 +5,8 @@ import os
 
 from datetime import datetime
 from tbl import db
-from tbl.posters.twitter import TwitterPoster
-from tbl.posters.facebook import FacebookPoster
+from tbl.interfaces.twitter import TwitterInterface
+from tbl.interfaces.facebook import FacebookInterface
 from operator import or_
 from functools import reduce
 from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
@@ -26,11 +26,11 @@ TW_ACCESS_TOKEN = os.environ.get('TW_ACCESS_TOKEN')
 TW_ACCESS_TOKEN_SECRET = os.environ.get('TW_ACCESS_TOKEN_SECRET')
 
 # init twitter interface
-twitter = TwitterPoster(TW_CONSUMER_KEY, TW_CONSUMER_SECRET,
-                        TW_ACCESS_TOKEN, TW_ACCESS_TOKEN_SECRET)
+twitter = TwitterInterface(TW_CONSUMER_KEY, TW_CONSUMER_SECRET,
+                           TW_ACCESS_TOKEN, TW_ACCESS_TOKEN_SECRET)
 
 # init facebook interface
-facebook = FacebookPoster(FB_ACCESS_TOKEN, FB_PAGE_ID)
+facebook = FacebookInterface(FB_ACCESS_TOKEN, FB_PAGE_ID)
 
 # set available scrapers
 SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,

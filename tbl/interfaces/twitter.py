@@ -6,14 +6,24 @@ import uuid
 from hashlib import sha1
 from urllib.parse import quote, urlencode
 
-from tbl.posters.base import BasePoster
+from tbl.interfaces.base import BaseInterface
 
 
-class TwitterPoster(BasePoster):
+class TwitterInterface(BaseInterface):
+    """
+    Class for posting on Twitter
+    """
     api_url = 'https://api.twitter.com/1.1/statuses/update.json'
 
     def __init__(self, consumer_key, consumer_secret, token,
                  token_secret):
+        """
+        Constructor
+        :param consumer_key: consumer key
+        :param consumer_secret: consumer secret
+        :param token: API token
+        :param token_secret: API token secret
+        """
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret
         self.token = token
@@ -21,6 +31,15 @@ class TwitterPoster(BasePoster):
         super().__init__()
 
     def get_signature(self, method, api_url, message, timestamp, unique):
+        """
+        Get signature for the API call
+        :param method: http method POST/GET/PUT ...
+        :param api_url: API url that will be called
+        :param message: message to post
+        :param timestamp: timestamp in seconds
+        :param unique: unique id
+        :return: the signature for the API call
+        """
         params = {
             'status': message,
             'oauth_consumer_key': self.consumer_key,
@@ -35,9 +54,10 @@ class TwitterPoster(BasePoster):
 
         # create base string for hashing
         base_string = '{method}&{url}&{params}'.format(
-            method=quote(method, safe=''),
+            method=quote(method.upper(), safe=''),
             url=quote(api_url, safe=''),
-            params=quote(urlencode(params, safe='~', quote_via=quote), safe='~')
+            params=quote(urlencode(params, safe='~', quote_via=quote),
+                         safe='~')
         ).encode('utf8')
 
         # create signing key
@@ -49,13 +69,20 @@ class TwitterPoster(BasePoster):
         hashed = hmac.new(signature_key, base_string, sha1).digest()
         return base64.b64encode(hashed).decode('utf8')
 
-    async def post(self, link, *args, **kwargs):
+    async def post(self, message, *args, **kwargs):
+        """
+        Post a message on Twitter
+        :param message: message to post
+        :param args: other positional arguments
+        :param kwargs: other keyword arguments
+        :return: True if message was posted successfully otherwise False
+        """
         timestamp = int(time.time())
         unique = str(uuid.uuid4())
 
         # get the signature
-        signature = self.get_signature('POST', self.api_url, link, timestamp,
-                                       unique)
+        signature = self.get_signature('POST', self.api_url, message,
+                                       timestamp, unique)
 
         # build auth header
         oauth = 'OAuth oauth_consumer_key="{oauth_consumer_key}",\
@@ -75,7 +102,7 @@ class TwitterPoster(BasePoster):
         )
 
         headers = {'Authorization': oauth}
-        data = urlencode({'status': link}, safe='~', quote_via=quote)
+        data = urlencode({'status': message}, safe='~', quote_via=quote)
         url = '{base_url}?{data}'.format(base_url=self.api_url, data=data)
 
         with self.session as session:
