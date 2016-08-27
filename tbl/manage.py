@@ -2,6 +2,7 @@ import asyncio
 import aiohttp
 import argparse
 import os
+import logging
 
 from datetime import datetime
 from tbl import db
@@ -14,6 +15,11 @@ from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
     NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
     DropboxScraper, YoutubeScraper, SlackScraper, EvernoteScraper, \
     AtlassianScraper, GithubScraper, BufferScraper, YahooScraper
+
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
+
 
 # get facebook credentials
 FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
@@ -63,7 +69,7 @@ async def test_scrapers(session, scrapers):
         is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
                        links, True)
         status = 'ok' if len(links) > 0 and is_ok else 'not ok'
-        print('{scraper} ......... [{status}]'.format(
+        log.debug('{scraper} ......... [{status}]'.format(
             scraper=scrapers[idx].__name__,
             status=status))
 
@@ -82,10 +88,10 @@ async def post(platform='twitter'):
     elif platform == 'facebook':
         result = await facebook.post(link, title)
     else:
-        print('Invalid platform')
+        log.error('Invalid platform')
         return False
 
-    print('{link} posted: {result}'.format(link=link, result=result))
+    log.info('{link} posted: {result}'.format(link=link, result=result))
 
     # mark link as used
     if result:
