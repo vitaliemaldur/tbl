@@ -1,7 +1,7 @@
 import aiohttp
 import feedparser
 from urllib.parse import urljoin
-from bs4 import BeautifulSoup, Comment
+from bs4 import BeautifulSoup
 
 
 class BaseScraper(object):

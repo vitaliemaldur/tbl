@@ -2,6 +2,7 @@ import asyncio
 import aiohttp
 import argparse
 import os
+import logging
 
 from datetime import datetime
 from tbl import db
@@ -14,6 +15,10 @@ from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
     NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
     DropboxScraper, YoutubeScraper, SlackScraper, YelpScraper, \
     AtlassianScraper, GithubScraper, BufferScraper, YahooScraper
+
+
+log = logging.getLogger(__name__)
+
 
 # get facebook credentials
 FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
@@ -63,7 +68,7 @@ async def test_scrapers(session, scrapers):
         is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
                        links, True)
         status = 'ok' if len(links) > 0 and is_ok else 'not ok'
-        print('{scraper} ......... [{status}]'.format(
+        log.info('{scraper} ......... [{status}]'.format(
             scraper=scrapers[idx].__name__,
             status=status))
 
@@ -82,10 +87,10 @@ async def post(platform='twitter'):
     elif platform == 'facebook':
         result = await facebook.post(link, title)
     else:
-        print('Invalid platform')
+        log.error('Invalid platform')
         return False
 
-    print('{link} posted: {result}'.format(link=link, result=result))
+    log.info('{link} posted: {result}'.format(link=link, result=result))
 
     # mark link as used
     if result:
@@ -111,9 +116,13 @@ parser.add_argument('-t', '--test', default=False, type=bool,
                     choices=(True, False), help='test available scrapers')
 parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
                     help='post on social media')
+parser.add_argument('-d', '--debug', help="enable debugging statements",
+                    action="store_const", dest="loglevel", const=logging.DEBUG,
+                    default=logging.INFO)
 
 if __name__ == '__main__':
     args = parser.parse_args()
+    logging.basicConfig(level=args.loglevel)
     loop = asyncio.get_event_loop()
     with aiohttp.ClientSession(loop=loop) as session:
         if args.test:
