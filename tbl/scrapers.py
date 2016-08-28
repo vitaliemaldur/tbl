@@ -109,10 +109,6 @@ class AtlassianScraper(BaseScraper):
     url = 'https://developer.atlassian.com/blog/feed.xml'
 
 
-class EvernoteScraper(BaseScraper):
-    url = 'https://blog.evernote.com/feed/'
-
-
 class GithubScraper(BaseScraper):
     url = 'http://githubengineering.com/atom.xml'
 
