@@ -18,7 +18,6 @@ from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
 
 
 log = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
 
 
 # get facebook credentials
@@ -69,7 +68,7 @@ async def test_scrapers(session, scrapers):
         is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
                        links, True)
         status = 'ok' if len(links) > 0 and is_ok else 'not ok'
-        log.debug('{scraper} ......... [{status}]'.format(
+        log.info('{scraper} ......... [{status}]'.format(
             scraper=scrapers[idx].__name__,
             status=status))
 
@@ -117,9 +116,13 @@ parser.add_argument('-t', '--test', default=False, type=bool,
                     choices=(True, False), help='test available scrapers')
 parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
                     help='post on social media')
+parser.add_argument('-d', '--debug', help="enable debugging statements",
+                    action="store_const", dest="loglevel", const=logging.DEBUG,
+                    default=logging.INFO)
 
 if __name__ == '__main__':
     args = parser.parse_args()
+    logging.basicConfig(level=args.loglevel)
     loop = asyncio.get_event_loop()
     with aiohttp.ClientSession(loop=loop) as session:
         if args.test:
