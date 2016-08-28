@@ -12,7 +12,7 @@ from functools import reduce
 from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
     UberScraper, DigitalOceanScraper, PinterestScraper, SpotifyScraper, \
     NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
-    DropboxScraper, YoutubeScraper, SlackScraper, EvernoteScraper, \
+    DropboxScraper, YoutubeScraper, SlackScraper, YelpScraper, \
     AtlassianScraper, GithubScraper, BufferScraper, YahooScraper
 
 # get facebook credentials
@@ -36,7 +36,7 @@ facebook = FacebookInterface(FB_ACCESS_TOKEN, FB_PAGE_ID)
 SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
             DigitalOceanScraper, PinterestScraper, SpotifyScraper,
             NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper,
-            DropboxScraper, YoutubeScraper, SlackScraper, EvernoteScraper,
+            DropboxScraper, YoutubeScraper, SlackScraper, YelpScraper,
             AtlassianScraper, GithubScraper, BufferScraper, YahooScraper]
 
 

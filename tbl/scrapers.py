@@ -119,3 +119,7 @@ class BufferScraper(BaseScraper):
 
 class YahooScraper(BaseScraper):
     url = 'https://yahooeng.tumblr.com/rss'
+
+
+class YelpScraper(BaseScraper):
+    url = 'http://engineeringblog.yelp.com/feed.xml'
