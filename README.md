@@ -3,14 +3,14 @@ This is a scraper that will get links from a set of web pages and will post them
 
 ## Setup
   - Install `mongodb`
-  - Install `python3.5` and just `python setup.py install`
+  - Install `python3.5` and just `python3 setup.py install`
   
 If you want to contribute be sure that you:
   - install the package and requirements 
   
   ```bash
-  pip install -r requirements-dev.txt
-  python setup.py develop
+  pip3 install -r requirements-dev.txt
+  python3 setup.py develop
   ```
   - run `flake8 .` in the root of the project and fix the errors, before pushing your changes
 
@@ -24,9 +24,9 @@ export TW_CONSUMER_SECRET=<your_twitter_consumer_secret>
 export TW_ACCESS_TOKEN=<your_twitter_token>
 export TW_ACCESS_TOKEN_SECRET=<your_twitter_token_secret>
 
-python tbl/manage.py                #to fetch and store the links
-python tbl/manage.py --post=twitter #to post a random link on twitter
-python tbl/manage.py --test=true    #to test all available scrapers
+python3 tbl/manage.py                #to fetch and store the links
+python3 tbl/manage.py --post=twitter #to post a random link on twitter
+python3 tbl/manage.py --test=true    #to test all available scrapers
 ```
   
 ## OAuth Tokens
