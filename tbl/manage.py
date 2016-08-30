@@ -112,8 +112,8 @@ async def get_and_save_all(session, scrapers):
 # setup arguments
 parser = argparse.ArgumentParser(
     description='Fetch links, store and share them')
-parser.add_argument('-t', '--test', default=False, type=bool,
-                    choices=(True, False), help='test available scrapers')
+parser.add_argument('-t', '--test',  dest='test', action='store_true',
+                    help='test available scrapers')
 parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
                     help='post on social media')
 parser.add_argument('-d', '--debug', help="enable debugging statements",
