@@ -19,9 +19,10 @@ class FacebookInterface(BaseInterface):
         self.page_id = page_id
         super().__init__()
 
-    async def post(self, link, message=None):
+    async def post(self, session, link, message=None):
         """
         Post a link with a message on Facebook page
+        :param session: aiohttp.ClientSession object
         :param link: link to post
         :param message: message to post
         :return: True if message was posted successfully otherwise False
@@ -33,6 +34,5 @@ class FacebookInterface(BaseInterface):
             access_token=self.token,
         )
 
-        with self.session as session:
-            async with session.post(url) as resp:
-                return resp.status == 200
+        async with session.post(url) as resp:
+            return resp.status == 200

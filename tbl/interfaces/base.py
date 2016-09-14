@@ -1,5 +1,4 @@
 import asyncio
-import aiohttp
 
 
 class BaseInterface(object):
@@ -8,8 +7,6 @@ class BaseInterface(object):
     classes make the connection to social media platforms like Twitter and
     Facebook
     """
-    def __init__(self, *args, **kwargs):
-        self.session = aiohttp.ClientSession()
 
     async def bulk_post(self, messages):
         """
@@ -22,14 +19,12 @@ class BaseInterface(object):
         futures = [self.post(m) for m in messages]
         return await asyncio.gather(*futures)
 
-    async def post(self, link, message=None):
+    async def post(self, session, link, message=None):
         """
         Post a link with a message on a specific social media platform
+        :param session: aiohttp.ClientSession object
         :param link: link to post
         :param message: message to post
         :return: True if message was posted successfully otherwise False
         """
         raise NotImplementedError()
-
-    def __del__(self):
-        self.session.close()
