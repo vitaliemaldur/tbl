@@ -68,8 +68,8 @@ async def test_scrapers(session, scrapers):
         is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
                        links, True)
         status = 'ok' if len(links) > 0 and is_ok else 'not ok'
-        log.info('{scraper} ......... [{status}]'.format(
-            scraper=scrapers[idx].__name__,
+        log.info('{:.<50}[{status}]'.format(
+            scrapers[idx].__name__,
             status=status))
 
 async def post(session, platform='twitter'):
