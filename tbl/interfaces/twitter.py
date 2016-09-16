@@ -69,9 +69,10 @@ class TwitterInterface(BaseInterface):
         hashed = hmac.new(signature_key, base_string, sha1).digest()
         return base64.b64encode(hashed).decode('utf8')
 
-    async def post(self, link, message=None):
+    async def post(self, session, link, message=None):
         """
         Post a link with a message on Twitter
+        :param session: aiohttp.ClientSession object
         :param link: link to post
         :param message: message to post
         :return: True if message was posted successfully otherwise False
@@ -109,6 +110,5 @@ class TwitterInterface(BaseInterface):
         data = urlencode({'status': tweet}, safe='~', quote_via=quote)
         url = '{base_url}?{data}'.format(base_url=self.api_url, data=data)
 
-        with self.session as session:
-            async with session.post(url, headers=headers) as resp:
-                return resp.status == 200
+        async with session.post(url, headers=headers) as resp:
+            return resp.status == 200

@@ -68,13 +68,14 @@ async def test_scrapers(session, scrapers):
         is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
                        links, True)
         status = 'ok' if len(links) > 0 and is_ok else 'not ok'
-        log.info('{scraper} ......... [{status}]'.format(
-            scraper=scrapers[idx].__name__,
+        log.info('{:.<50}[{status}]'.format(
+            scrapers[idx].__name__,
             status=status))
 
-async def post(platform='twitter'):
+async def post(session, platform='twitter'):
     """
     Post on social media
+    :param session: aiohttp.ClientSession object
     :param platform: platform on which to post
     :return: True or False
     """
@@ -83,9 +84,9 @@ async def post(platform='twitter'):
     title = document['title'] if 'title' in document else None
 
     if platform == 'twitter':
-        result = await twitter.post(link, title)
+        result = await twitter.post(session, link, title)
     elif platform == 'facebook':
-        result = await facebook.post(link, title)
+        result = await facebook.post(session, link, title)
     else:
         log.error('Invalid platform')
         return False
@@ -129,7 +130,7 @@ if __name__ == '__main__':
             loop.run_until_complete(test_scrapers(session, SCRAPERS))
 
         if args.post:
-            loop.run_until_complete(post(args.post))
+            loop.run_until_complete(post(session, args.post))
 
         if not args.test and not args.post:
             loop.run_until_complete(get_and_save_all(session, SCRAPERS))
