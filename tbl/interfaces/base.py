@@ -8,15 +8,16 @@ class BaseInterface(object):
     Facebook
     """
 
-    async def bulk_post(self, messages):
+    async def bulk_post(self, session, links):
         """
         Post messages in bulk through the interface to a specific social media
         platform
-        :param messages: messages to post
+        :param session: aiohttp.ClientSession object
+        :param links: messages to post
         :return: a list of true and false values, value from position i show if
         message i was successfully posted or not
         """
-        futures = [self.post(m) for m in messages]
+        futures = [self.post(session, m) for m in links]
         return await asyncio.gather(*futures)
 
     async def post(self, session, link, message=None):
