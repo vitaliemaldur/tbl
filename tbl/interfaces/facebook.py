@@ -6,8 +6,8 @@ class FacebookInterface(BaseInterface):
     """
     Class for posting on Facebook
     """
-    api_url = 'https://graph.facebook.com/v2.7/{page_id}/feed?message={message}\
-    &link={link}&access_token={access_token}'
+    api_url = 'https://graph.facebook.com/v2.7/{page_id}/feed?' \
+              'message={message}&link={link}&access_token={access_token}'
 
     def __init__(self, token, page_id):
         """
