@@ -14,7 +14,8 @@ from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
     UberScraper, DigitalOceanScraper, PinterestScraper, SpotifyScraper, \
     NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
     DropboxScraper, YoutubeScraper, SlackScraper, YelpScraper, \
-    AtlassianScraper, GithubScraper, BufferScraper, YahooScraper
+    AtlassianScraper, GithubScraper, BufferScraper, YahooScraper, \
+    PerconaScraper
 
 
 log = logging.getLogger(__name__)
@@ -42,7 +43,8 @@ SCRAPERS = [QuoraScraper, InstagramScraper, FacebookScraper, UberScraper,
             DigitalOceanScraper, PinterestScraper, SpotifyScraper,
             NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper,
             DropboxScraper, YoutubeScraper, SlackScraper, YelpScraper,
-            AtlassianScraper, GithubScraper, BufferScraper, YahooScraper]
+            AtlassianScraper, GithubScraper, BufferScraper, YahooScraper,
+            PerconaScraper]
 
 
 async def get_all(session, scrapers):
@@ -113,7 +115,7 @@ async def get_and_save_all(session, scrapers):
 # setup arguments
 parser = argparse.ArgumentParser(
     description='Fetch links, store and share them')
-parser.add_argument('-t', '--test',  dest='test', action='store_true',
+parser.add_argument('-t', '--test', dest='test', action='store_true',
                     help='test available scrapers')
 parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
                     help='post on social media')

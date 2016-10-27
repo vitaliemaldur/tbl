@@ -123,3 +123,7 @@ class YahooScraper(BaseScraper):
 
 class YelpScraper(BaseScraper):
     url = 'http://engineeringblog.yelp.com/feed.xml'
+
+
+class PerconaScraper(BaseScraper):
+    url = 'https://www.percona.com/blog/feed/'
