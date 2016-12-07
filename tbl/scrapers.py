@@ -44,7 +44,7 @@ class QuoraScraper(BaseScraper):
     async def get_links(cls, session):
         page = BeautifulSoup(await cls.fetch_page(session), 'html.parser')
         links = page.find_all('a', class_='BoardItemTitle')
-        return {(a['href'], a.strong.span.p.text) for a in links}
+        return {(a['href'], a.span.p.text) for a in links}
 
 
 class FacebookScraper(BaseScraper):
