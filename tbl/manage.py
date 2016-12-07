@@ -60,6 +60,7 @@ async def get_all(session, scrapers):
                scrapers]
     return await asyncio.gather(*futures)
 
+
 async def test_scrapers(session, scrapers):
     """
     Test if all scrapers return a non-empty set of links
@@ -75,6 +76,7 @@ async def test_scrapers(session, scrapers):
         log.info('{:.<50}[{status}]'.format(
             scrapers[idx].__name__,
             status=status))
+
 
 async def post(session, platform='twitter'):
     """
@@ -103,6 +105,7 @@ async def post(session, platform='twitter'):
         await db.update_post(document['_id'], update_keys)
 
     return result
+
 
 async def remove(scraper_name):
     """

@@ -35,6 +35,7 @@ async def insert_url(url, title):
         document = await update_post(document['_id'], {'title': title})
     return document
 
+
 async def insert_urls(urls):
     """
     Insert a list of (url, title)
@@ -43,6 +44,7 @@ async def insert_urls(urls):
     """
     futures = [insert_url(url, title) for url, title in urls]
     return await asyncio.gather(*futures)
+
 
 async def update_post(pk, keys):
     """
@@ -56,6 +58,7 @@ async def update_post(pk, keys):
         raise Exception('Document _id={} not updated'.format(pk))
     return await posts_collection.find_one({'_id': pk})
 
+
 async def delete_urls(domain):
     """
     Delete all urls with a specific domain
@@ -66,6 +69,7 @@ async def delete_urls(domain):
     result = await posts_collection.delete_many({'url': {'$regex': regex}})
     log.info('Removed {} links'.format(result.deleted_count))
     return result.deleted_count
+
 
 async def get_next_for_post():
     """
