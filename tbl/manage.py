@@ -5,11 +5,13 @@ import os
 import logging
 
 from datetime import datetime
+from urllib.parse import urlparse
+from functools import reduce
+from operator import or_
+
 from tbl import db
 from tbl.interfaces.twitter import TwitterInterface
 from tbl.interfaces.facebook import FacebookInterface
-from operator import or_
-from functools import reduce
 from tbl.scrapers import QuoraScraper, InstagramScraper, FacebookScraper, \
     UberScraper, DigitalOceanScraper, PinterestScraper, SpotifyScraper, \
     NetflixScraper, AirbnbScraper, PayPalScraper, TwitterScraper, \
@@ -102,6 +104,22 @@ async def post(session, platform='twitter'):
 
     return result
 
+async def remove(scraper_name):
+    """
+    Remove all the links of the specified scraper
+    :param scraper_name: name of the scraper
+    :return: number of removed urls
+    """
+    for scraper_class in SCRAPERS:
+        if scraper_class.__name__ == scraper_name:
+            parsed_url = urlparse(scraper_class.url)
+            result = await db.delete_urls(parsed_url.netloc)
+            return result
+
+    log.error('Invalid base url')
+    return 0
+
+
 async def get_and_save_all(session, scrapers):
     """
     Get all links to articles and save them in db
@@ -119,6 +137,8 @@ parser.add_argument('-t', '--test', dest='test', action='store_true',
                     help='test available scrapers')
 parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
                     help='post on social media')
+parser.add_argument('-r', '--remove', type=str, dest='remove',
+                    help='remove all links of a specific scraper')
 parser.add_argument('-d', '--debug', help="enable debugging statements",
                     action="store_const", dest="loglevel", const=logging.DEBUG,
                     default=logging.INFO)
@@ -134,5 +154,8 @@ if __name__ == '__main__':
         if args.post:
             loop.run_until_complete(post(session, args.post))
 
-        if not args.test and not args.post:
+        if args.remove:
+            loop.run_until_complete(remove(args.remove))
+
+        if not any((args.test, args.post, args.remove)):
             loop.run_until_complete(get_and_save_all(session, SCRAPERS))

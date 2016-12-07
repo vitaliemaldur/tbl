@@ -11,7 +11,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'aiohttp==0.22.4',
-        'motor==0.6.2',
+        'motor==1.1',
         'beautifulsoup4==4.5.0',
         'feedparser==5.2.1',
     ],

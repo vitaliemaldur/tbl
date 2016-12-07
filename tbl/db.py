@@ -56,6 +56,17 @@ async def update_post(pk, keys):
         raise Exception('Document _id={} not updated'.format(pk))
     return await posts_collection.find_one({'_id': pk})
 
+async def delete_urls(domain):
+    """
+    Delete all urls with a specific domain
+    :param domain: domain of the blog
+    :return: number of deleted documents
+    """
+    regex = '/{domain}/'.format(domain=domain)
+    result = await posts_collection.delete_many({'url': {'$regex': regex}})
+    log.info('Removed {} links'.format(result.deleted_count))
+    return result.deleted_count
+
 async def get_next_for_post():
     """
     Get a random document from db with an url that wasn't posted
