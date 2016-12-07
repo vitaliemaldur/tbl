@@ -24,9 +24,10 @@ export TW_CONSUMER_SECRET=<your_twitter_consumer_secret>
 export TW_ACCESS_TOKEN=<your_twitter_token>
 export TW_ACCESS_TOKEN_SECRET=<your_twitter_token_secret>
 
-python3 tbl/manage.py                #to fetch and store the links
-python3 tbl/manage.py --post=twitter #to post a random link on twitter
-python3 tbl/manage.py --test         #to test all available scrapers
+python3 tbl/manage.py                           #to fetch and store the links
+python3 tbl/manage.py --post=twitter            #to post a random link on twitter
+python3 tbl/manage.py --test                    #to test all available scrapers
+python3 tbl/manage.py --remove InstagramScraper # remove all links of this scraper 
 ```
   
 ## OAuth Tokens
