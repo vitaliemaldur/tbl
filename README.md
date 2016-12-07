@@ -26,7 +26,7 @@ export TW_ACCESS_TOKEN_SECRET=<your_twitter_token_secret>
 
 python3 tbl/manage.py                #to fetch and store the links
 python3 tbl/manage.py --post=twitter #to post a random link on twitter
-python3 tbl/manage.py --test    #to test all available scrapers
+python3 tbl/manage.py --test         #to test all available scrapers
 ```
   
 ## OAuth Tokens
