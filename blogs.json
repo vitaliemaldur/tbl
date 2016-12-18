@@ -1,0 +1,106 @@
+[
+  {
+    "name": "Facebook",
+    "url": "https://code.facebook.com/posts/rss",
+    "content_type": "xml"
+  },
+  {
+    "name": "Quora",
+    "url": "https://engineering.quora.com/",
+    "content_type": "html",
+    "selectors": {
+      "title": ".qtext_para",
+      "link": ".BoardItemTitle"
+    }
+  },
+  {
+    "name": "DigitalOcean",
+    "url": "https://www.digitalocean.com/company/blog/feed.xml",
+    "content_type": "xml"
+  },
+  {
+    "name": "Instagram",
+    "url": "https://engineering.instagram.com/feed",
+    "content_type": "xml"
+  },
+  {
+    "name": "Uber",
+    "url": "https://eng.uber.com/feed/",
+    "content_type": "xml"
+  },
+  {
+    "name": "Pinterest",
+    "url": "https://engineering.pinterest.com/blog/rss",
+    "content_type": "xml"
+  },
+  {
+    "name": "Spotify",
+    "url": "https://labs.spotify.com/feed/",
+    "content_type": "xml"
+  },
+  {
+    "name": "Netflix",
+    "url": "http://techblog.netflix.com/feeds/posts/default",
+    "content_type": "xml"
+  },
+  {
+    "name": "Airbnb",
+    "url": "http://nerds.airbnb.com/feed/",
+    "content_type": "xml"
+  },
+  {
+    "name": "PayPal",
+    "url": "https://www.paypal-engineering.com/feed/",
+    "content_type": "xml"
+  },
+  {
+    "name": "Twitter",
+    "url": "https://blog.twitter.com/api/blog.rss",
+    "content_type": "xml"
+  },
+  {
+    "name": "Dropbox",
+    "url": "https://blogs.dropbox.com/tech/feed/",
+    "content_type": "xml"
+  },
+  {
+    "name": "YouTube",
+    "url": "https://youtube-eng.blogspot.com/feeds/posts/default?alt=rss",
+    "content_type": "xml"
+  },
+  {
+    "name": "Slack",
+    "url": "https://medium.com/feed/slack-developer-blog",
+    "content_type": "xml"
+  },
+  {
+    "name": "Atlassian",
+    "url": "https://developer.atlassian.com/blog/feed.xml",
+    "content_type": "xml"
+  },
+  {
+    "name": "Github",
+    "url": "http://githubengineering.com/atom.xml",
+    "content_type": "xml"
+  },
+  {
+    "name": "Buffer",
+    "url": "https://overflow.buffer.com/feed/",
+    "content_type": "xml"
+  },
+  {
+    "name": "Yahoo",
+    "url": "https://yahooeng.tumblr.com/rss",
+    "content_type": "xml"
+  },
+  {
+    "name": "Yelp",
+    "url": "http://engineeringblog.yelp.com/feed.xml",
+    "content_type": "xml"
+  },
+  {
+    "name": "Percona",
+    "url": "https://www.percona.com/blog/feed/",
+    "content_type": "xml"
+  }
+]
