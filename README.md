@@ -24,12 +24,32 @@ export TW_CONSUMER_SECRET=<your_twitter_consumer_secret>
 export TW_ACCESS_TOKEN=<your_twitter_token>
 export TW_ACCESS_TOKEN_SECRET=<your_twitter_token_secret>
 
-python3 tbl/manage.py                           #to fetch and store the links
-python3 tbl/manage.py --post=twitter            #to post a random link on twitter
-python3 tbl/manage.py --test                    #to test all available scrapers
-python3 tbl/manage.py --remove InstagramScraper # remove all links of this scraper 
+python3 tbl/manage.py --file <config.json>                    # to fetch and store the links
+python3 tbl/manage.py --post=twitter                          # to post a random link on twitter
+python3 tbl/manage.py --file <config.json> --test             # to test the configuration
+python3 tbl/manage.py --file <config.json> --remove Instagram # remove all links of one blog
 ```
-  
+
+## Config example
+```json
+[
+  {
+    "name": "Facebook",
+    "url": "https://code.facebook.com/posts/rss",
+    "content_type": "xml"
+  },
+  {
+    "name": "Quora",
+    "url": "https://engineering.quora.com/",
+    "content_type": "html",
+    "selectors": {
+      "title": ".qtext_para",
+      "link": ".BoardItemTitle"
+    }
+  }
+]
+```
+
 ## OAuth Tokens
   
 ### Facebook access token
