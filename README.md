@@ -56,11 +56,7 @@ python3 tbl/manage.py --file <config.json> --remove Instagram # remove all links
 Debug tool: https://developers.facebook.com/tools/debug/accesstoken
 
 Steps to get the extended token:
-  1. Go to [Graph Explorer](https://developers.facebook.com/tools/explorer/) and generate a user token with scope
-  
-  ```bash
-  manage_pages,publish_pages
-  ```
+  1. Go to [Graph Explorer](https://developers.facebook.com/tools/explorer/) and generate a user token with scope `manage_pages,publish_pages`
 
   2. Generate an extended user token
   
