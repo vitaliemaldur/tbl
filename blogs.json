@@ -55,7 +55,7 @@
   },
   {
     "name": "Twitter",
-    "url": "https://blog.twitter.com/api/blog.rss",
+    "url": "https://blog.twitter.com/api/blog.rss?name=engineering",
     "content_type": "xml"
   },
   {
