@@ -29,9 +29,10 @@ async def insert_post(url, title, pub_date):
             'posted_at': None
         })
         log.info('New URL found: %s', url)
-    elif 'title' not in document:
+    elif 'title' not in document or 'published_at' not in document:
         document = await update_post(document['_id'],
                                      {'title': title, 'published_at': pub_date})
+        log.info('URL %s updated', document['url'])
     return document
 
 
