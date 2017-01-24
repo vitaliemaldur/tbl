@@ -24,10 +24,6 @@
     "url": "https://engineering.pinterest.com/blog/rss"
   },
   {
-    "name": "Spotify",
-    "url": "https://labs.spotify.com/feed/"
-  },
-  {
     "name": "Netflix",
     "url": "http://techblog.netflix.com/feeds/posts/default"
   },
@@ -46,10 +42,6 @@
   {
     "name": "Dropbox",
     "url": "https://blogs.dropbox.com/tech/feed/"
-  },
-  {
-    "name": "YouTube",
-    "url": "https://youtube-eng.blogspot.com/feeds/posts/default?alt=rss"
   },
   {
     "name": "Slack",
@@ -78,5 +70,13 @@
   {
     "name": "Percona",
     "url": "https://www.percona.com/blog/feed/"
+  },
+  {
+    "name": "Medium",
+    "url": "https://medium.engineering/feed"
+  },
+  {
+    "name": "Linkedin",
+    "url": "https://engineering.linkedin.com/blog.rss"
   }
 ]
