@@ -47,14 +47,8 @@ async def get_all(blogs_config):
     """
     scrapers = []
     for blog in blogs_config:
-        if blog['content_type'] == 'xml':
-            scrapers.append(Scraper(name=blog['name'], url=blog['url'],
-                                    content_type=blog['content_type']))
-        else:
-            scrapers.append(Scraper(name=blog['name'], url=blog['url'],
-                                    content_type=blog['content_type'],
-                                    title_selector=blog['selectors']['title'],
-                                    link_selector=blog['selectors']['link']))
+        scrapers.append(Scraper(name=blog['name'], url=blog['url']))
+
     futures = [asyncio.ensure_future(s.get_links()) for s in scrapers]
     return await asyncio.gather(*futures)
 

@@ -1,106 +1,82 @@
 [
   {
     "name": "Facebook",
-    "url": "https://code.facebook.com/posts/rss",
-    "content_type": "xml"
+    "url": "https://code.facebook.com/posts/rss"
   },
   {
     "name": "Quora",
-    "url": "https://engineering.quora.com/",
-    "content_type": "html",
-    "selectors": {
-      "title": ".qtext_para",
-      "link": ".BoardItemTitle"
-    }
+    "url": "https://engineering.quora.com/rss"
   },
   {
     "name": "DigitalOcean",
-    "url": "https://www.digitalocean.com/company/blog/feed.xml",
-    "content_type": "xml"
+    "url": "https://www.digitalocean.com/company/blog/feed.xml"
   },
   {
     "name": "Instagram",
-    "url": "https://engineering.instagram.com/feed",
-    "content_type": "xml"
+    "url": "https://engineering.instagram.com/feed"
   },
   {
     "name": "Uber",
-    "url": "https://eng.uber.com/feed/",
-    "content_type": "xml"
+    "url": "https://eng.uber.com/feed/"
   },
   {
     "name": "Pinterest",
-    "url": "https://engineering.pinterest.com/blog/rss",
-    "content_type": "xml"
+    "url": "https://engineering.pinterest.com/blog/rss"
   },
   {
     "name": "Spotify",
-    "url": "https://labs.spotify.com/feed/",
-    "content_type": "xml"
+    "url": "https://labs.spotify.com/feed/"
   },
   {
     "name": "Netflix",
-    "url": "http://techblog.netflix.com/feeds/posts/default",
-    "content_type": "xml"
+    "url": "http://techblog.netflix.com/feeds/posts/default"
   },
   {
     "name": "Airbnb",
-    "url": "http://nerds.airbnb.com/feed/",
-    "content_type": "xml"
+    "url": "http://nerds.airbnb.com/feed/"
   },
   {
     "name": "PayPal",
-    "url": "https://www.paypal-engineering.com/feed/",
-    "content_type": "xml"
+    "url": "https://www.paypal-engineering.com/feed/"
   },
   {
     "name": "Twitter",
-    "url": "https://blog.twitter.com/api/blog.rss?name=engineering",
-    "content_type": "xml"
+    "url": "https://blog.twitter.com/api/blog.rss?name=engineering"
   },
   {
     "name": "Dropbox",
-    "url": "https://blogs.dropbox.com/tech/feed/",
-    "content_type": "xml"
+    "url": "https://blogs.dropbox.com/tech/feed/"
   },
   {
     "name": "YouTube",
-    "url": "https://youtube-eng.blogspot.com/feeds/posts/default?alt=rss",
-    "content_type": "xml"
+    "url": "https://youtube-eng.blogspot.com/feeds/posts/default?alt=rss"
   },
   {
     "name": "Slack",
-    "url": "https://medium.com/feed/slack-developer-blog",
-    "content_type": "xml"
+    "url": "https://medium.com/feed/slack-developer-blog"
   },
   {
     "name": "Atlassian",
-    "url": "https://developer.atlassian.com/blog/feed.xml",
-    "content_type": "xml"
+    "url": "https://developer.atlassian.com/blog/feed.xml"
   },
   {
     "name": "Github",
-    "url": "http://githubengineering.com/atom.xml",
-    "content_type": "xml"
+    "url": "http://githubengineering.com/atom.xml"
   },
   {
     "name": "Buffer",
-    "url": "https://overflow.buffer.com/feed/",
-    "content_type": "xml"
+    "url": "https://overflow.buffer.com/feed/"
   },
   {
     "name": "Yahoo",
-    "url": "https://yahooeng.tumblr.com/rss",
-    "content_type": "xml"
+    "url": "https://yahooeng.tumblr.com/rss"
   },
   {
     "name": "Yelp",
-    "url": "http://engineeringblog.yelp.com/feed.xml",
-    "content_type": "xml"
+    "url": "http://engineeringblog.yelp.com/feed.xml"
   },
   {
     "name": "Percona",
-    "url": "https://www.percona.com/blog/feed/",
-    "content_type": "xml"
+    "url": "https://www.percona.com/blog/feed/"
   }
 ]

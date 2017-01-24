@@ -8,21 +8,14 @@ class Scraper(object):
     """
     Class that implements basic scraper functionality
     """
-    def __init__(self, name, url, content_type='xml', title_selector=None,
-                 link_selector=None):
+    def __init__(self, name, url):
         """
         Scraper constructor
         :param name: Name of the scraper
         :param url: Url to the blog or rss feed
-        :param content_type: xml or html
-        :param title_selector: css selector for article titles
-        :param link_selector: css selector of articles links
         """
         self.name = name
         self.url = url
-        self.content_type = content_type
-        self.title_selector = title_selector
-        self.link_selector = link_selector
 
     async def fetch_page(self, session):
         """
@@ -46,11 +39,5 @@ class Scraper(object):
         loop = asyncio.get_event_loop()
         with aiohttp.ClientSession(loop=loop) as session:
             page = await self.fetch_page(session)
-            if self.content_type == 'xml':
-                feed = feedparser.parse(page)
-                return {(item.link, item.title) for item in feed.entries}
-            else:
-                html = BeautifulSoup(page, 'html.parser')
-                links = html.select(self.link_selector)
-                titles = html.select(self.title_selector)
-                return {(l['href'], t.text) for l, t in zip(links, titles)}
+            feed = feedparser.parse(page)
+            return {(item.link, item.title) for item in feed.entries}
