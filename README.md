@@ -35,17 +35,11 @@ python3 tbl/manage.py --file <config.json> --remove Instagram # remove all links
 [
   {
     "name": "Facebook",
-    "url": "https://code.facebook.com/posts/rss",
-    "content_type": "xml"
+    "url": "https://code.facebook.com/posts/rss"
   },
   {
     "name": "Quora",
-    "url": "https://engineering.quora.com/",
-    "content_type": "html",
-    "selectors": {
-      "title": ".qtext_para",
-      "link": ".BoardItemTitle"
-    }
+    "url": "https://engineering.quora.com/rss"
   }
 ]
 ```
