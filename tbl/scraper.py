@@ -43,8 +43,8 @@ class Scraper(object):
             page = await self.fetch_page(session)
             feed = feedparser.parse(page)
 
-            posts = []
+            posts = set()
             for post in feed.entries:
                 pub_date = datetime.fromtimestamp(mktime(post.published_parsed))
-                posts.append((post.link, post.title, pub_date))
+                posts.add((post.link, post.title, pub_date))
             return posts

@@ -120,8 +120,8 @@ async def get_and_save_all(blogs_config):
     :param blogs_config: list of configurations for blogs
     :return: documents from db
     """
-    links = await get_all(blogs_config)
-    return await db.insert_posts(reduce(or_, links))
+    posts = await get_all(blogs_config)
+    return await db.insert_posts(reduce(or_, posts))
 
 # setup arguments
 parser = argparse.ArgumentParser(
