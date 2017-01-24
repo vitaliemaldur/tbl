@@ -1,7 +1,9 @@
 import aiohttp
 import asyncio
 import feedparser
-from bs4 import BeautifulSoup
+
+from time import mktime
+from datetime import datetime
 
 
 class Scraper(object):
@@ -31,13 +33,18 @@ class Scraper(object):
                 assert response.status == 200
                 return await response.read()
 
-    async def get_links(self):
+    async def get_posts(self):
         """
-        Get all links from a fetched page
-        :return: a set of links from the page
+        Get all posts from a fetched page
+        :return: a set of posts from the page
         """
         loop = asyncio.get_event_loop()
         with aiohttp.ClientSession(loop=loop) as session:
             page = await self.fetch_page(session)
             feed = feedparser.parse(page)
-            return {(item.link, item.title) for item in feed.entries}
+
+            posts = []
+            for post in feed.entries:
+                pub_date = datetime.fromtimestamp(mktime(post.published_parsed))
+                posts.append((post.link, post.title, pub_date))
+            return posts

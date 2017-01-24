@@ -1,6 +1,5 @@
 import asyncio
 import json
-
 import argparse
 import os
 import logging
@@ -41,7 +40,7 @@ facebook = FacebookInterface(FB_ACCESS_TOKEN, FB_PAGE_ID)
 
 async def get_all(blogs_config):
     """
-    Gets all the article links from the given list of blogs
+    Gets all the article posts from the given list of blogs
     :param blogs_config: list of configurations for blogs
     :return: list of sets of links
     """
@@ -49,19 +48,19 @@ async def get_all(blogs_config):
     for blog in blogs_config:
         scrapers.append(Scraper(name=blog['name'], url=blog['url']))
 
-    futures = [asyncio.ensure_future(s.get_links()) for s in scrapers]
+    futures = [asyncio.ensure_future(s.get_posts()) for s in scrapers]
     return await asyncio.gather(*futures)
 
 
 async def test_scrapers(blogs_config):
     """
-    Test if all configurations return a non-empty set of links
+    Test if all configurations return a non-empty set of posts
     :param blogs_config: list of configurations for blogs
     :return:
     """
-    sets_of_links = await get_all(blogs_config)
-    for idx, links in enumerate(sets_of_links):
-        is_ok = reduce(lambda acc, item: acc and len(item) == 2 and all(item),
+    sets_of_posts = await get_all(blogs_config)
+    for idx, links in enumerate(sets_of_posts):
+        is_ok = reduce(lambda acc, item: acc and len(item) == 3 and all(item),
                        links, True)
         status = 'ok' if len(links) > 0 and is_ok else 'not ok'
         log.info('{:.<50}[{status}]'.format(blogs_config[idx]['name'],
@@ -108,7 +107,7 @@ async def remove(blogs_config, blog_name):
     for blog in blogs_config:
         if blog['name'] == blog_name:
             parsed_url = urlparse(blog['url'])
-            result = await db.delete_urls(parsed_url.netloc)
+            result = await db.delete_posts(parsed_url.netloc)
             return result
 
     log.error('Invalid base url')
@@ -117,12 +116,12 @@ async def remove(blogs_config, blog_name):
 
 async def get_and_save_all(blogs_config):
     """
-    Get all links to articles and save them in db
+    Get all posts and save them in db
     :param blogs_config: list of configurations for blogs
     :return: documents from db
     """
     links = await get_all(blogs_config)
-    return await db.insert_urls(reduce(or_, links))
+    return await db.insert_posts(reduce(or_, links))
 
 # setup arguments
 parser = argparse.ArgumentParser(

@@ -13,7 +13,6 @@ setup(
         'aiohttp==1.1.1',
         'multidict==2.1.4',
         'motor==1.1',
-        'beautifulsoup4==4.5.0',
         'feedparser==5.2.1',
     ],
 )

@@ -1,7 +1,5 @@
 import asyncio
-import random
 import logging
-from datetime import datetime
 
 import motor.motor_asyncio
 
@@ -14,11 +12,12 @@ client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
 posts_collection = client['tbl']['posts']
 
 
-async def insert_url(url, title):
+async def insert_post(url, title, pub_date):
     """
-    Insert an url in db
+    Insert an post in db
     :param url: url to insert
     :param title: title of article
+    :param pub_date: publication date of the article
     :return: created document
     """
     document = await posts_collection.find_one({'url': {'$eq': url}})
@@ -26,9 +25,8 @@ async def insert_url(url, title):
         document = await posts_collection.insert({
             'url': url,
             'title': title,
-            'created_at': datetime.utcnow(),
-            'posted_at': None,
-            '_random_value': random.random(),
+            'published_at': pub_date,
+            'posted_at': None
         })
         log.info('New URL found: %s', url)
     elif 'title' not in document:
@@ -36,13 +34,14 @@ async def insert_url(url, title):
     return document
 
 
-async def insert_urls(urls):
+async def insert_posts(posts):
     """
     Insert a list of (url, title)
-    :param urls: list of (url, title) to insert
+    :param posts: list of (url, title, pub_date) to insert
     :return: a list of documents created
     """
-    futures = [insert_url(url, title) for url, title in urls]
+    futures = [insert_post(url, title, pub_date)
+               for url, title, pub_date in posts]
     return await asyncio.gather(*futures)
 
 
@@ -59,9 +58,9 @@ async def update_post(pk, keys):
     return await posts_collection.find_one({'_id': pk})
 
 
-async def delete_urls(domain):
+async def delete_posts(domain):
     """
-    Delete all urls with a specific domain
+    Delete all posts with a specific domain
     :param domain: domain of the blog
     :return: number of deleted documents
     """
@@ -76,10 +75,10 @@ async def get_next_for_post():
     Get a random document from db with an url that wasn't posted
     :return: the selected document
     """
-    # select first random document
+    # select most recent post
     results = await posts_collection.find({
         'posted_at': None,
-    }).sort('_random_value').to_list(1)
+    }).sort('published_at', -1).to_list(1)
 
     # if not url found, log to console
     if not results:
