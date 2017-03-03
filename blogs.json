@@ -78,5 +78,13 @@
   {
     "name": "Linkedin",
     "url": "https://engineering.linkedin.com/blog.rss"
+  },
+  {
+    "name": "HighScalability",
+    "url": "http://feeds.feedburner.com/HighScalability?format=xml"
+  },
+  {
+    "name": "Zapier",
+    "url": "https://zapier.com/engineering/feeds/latest/"
   }
 ]
