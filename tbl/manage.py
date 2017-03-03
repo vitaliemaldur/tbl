@@ -67,10 +67,9 @@ async def test_scrapers(blogs_config):
                                             status=status))
 
 
-async def post(platform='twitter'):
+async def post():
     """
     Post on social media
-    :param platform: platform on which to post
     :return: True or False
     """
     document = await db.get_next_for_post()
@@ -79,22 +78,18 @@ async def post(platform='twitter'):
 
     loop = asyncio.get_event_loop()
     with aiohttp.ClientSession(loop=loop) as session:
-        if platform == 'twitter':
-            result = await twitter.post(session, link, title)
-        elif platform == 'facebook':
-            result = await facebook.post(session, link, title)
-        else:
-            log.error('Invalid platform')
-            return False
+        posted_tw = await twitter.post(session, link, title)
+        posted_fb = await facebook.post(session, link, title)
 
-    log.info('{link} posted: {result}'.format(link=link, result=result))
+    log.info('{link} posted: FB {fb} TW {tw}'.format(link=link, fb=posted_fb,
+                                                     tw=posted_tw))
 
     # mark link as used
-    if result:
+    if posted_tw or posted_fb:
         update_keys = {'posted_at': datetime.utcnow()}
         await db.update_post(document['_id'], update_keys)
 
-    return result
+    return posted_tw or posted_fb
 
 
 async def remove(blogs_config, blog_name):
@@ -131,8 +126,7 @@ parser.add_argument('-f', '--file', dest='file', required=True,
                     type=argparse.FileType('r', encoding='UTF-8'))
 parser.add_argument('-t', '--test', dest='test', action='store_true',
                     help='test available scrapers')
-parser.add_argument('-p', '--post', type=str, choices=('facebook', 'twitter'),
-                    help='post on social media')
+parser.add_argument('-p', '--post', type=bool, help='post on social media')
 parser.add_argument('-r', '--remove', type=str, dest='remove',
                     help='remove all links of a specific scraper')
 parser.add_argument('-d', '--debug', help="enable debugging statements",
@@ -151,7 +145,7 @@ if __name__ == '__main__':
             loop.run_until_complete(test_scrapers(blogs_config))
 
         if args.post:
-            loop.run_until_complete(post(args.post))
+            loop.run_until_complete(post())
 
         if args.remove:
             loop.run_until_complete(remove(blogs_config, args.remove))
