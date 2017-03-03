@@ -68,10 +68,6 @@
     "url": "http://engineeringblog.yelp.com/feed.xml"
   },
   {
-    "name": "Percona",
-    "url": "https://www.percona.com/blog/feed/"
-  },
-  {
     "name": "Medium",
     "url": "https://medium.engineering/feed"
   },
