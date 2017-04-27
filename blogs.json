@@ -82,5 +82,9 @@
   {
     "name": "Zapier",
     "url": "https://zapier.com/engineering/feeds/latest/"
+  },
+  {
+    "name": "Nginx",
+    "url": "https://www.nginx.com/feed/"
   }
 ]
